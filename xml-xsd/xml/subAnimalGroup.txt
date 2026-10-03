@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAnimalGroups>
+    <SubAnimalGroup>
+        <id>sag1</id>
+        <groupAnimal_id>ag1</groupAnimal_id>
+        <name>Vaches laitières</name>
+        <type>Lait</type>
+        <quantity>50</quantity>
+    </SubAnimalGroup>
+    <SubAnimalGroup>
+        <id>sag2</id>
+        <groupAnimal_id>ag2</groupAnimal_id>
+        <name>Moutons</name>
+        <type>Viande</type>
+        <quantity>120</quantity>
+    </SubAnimalGroup>
+</SubAnimalGroups>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FourageStocks>
+    <FourageStock>
+        <id>fs1</id>
+        <name>Stock Foin Principal</name>
+        <fourage_id>f1</fourage_id>
+        <supplier_id>sup1</supplier_id>
+        <quantity>1000</quantity>
+        <alert_threshold>200</alert_threshold>
+        <createdAt>2025-01-01T10:00:00</createdAt>
+        <updatedAt>2025-01-05T15:30:00</updatedAt>
+    </FourageStock>
+</FourageStocks>

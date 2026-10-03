@@ -1,0 +1,253 @@
+<!-- Smart Stock Prediction Dashboard -->
+<section class="predictionDashboard">
+  
+  <!-- Page Header -->
+  <div class="pageHeader">
+    <div class="titleBlock">
+      <h2><i class="fa-solid fa-chart-line"></i> Smart Stock Prediction</h2>
+      <p class="subTitle">Intelligent forecasting and consumption analysis for forage stock management</p>
+    </div>
+    
+  </div>
+
+  <!-- Error Alert -->
+  @if (isError) {
+    <div class="alert alertError" role="alert">
+      <div class="alertIcon" aria-hidden="true">!</div>
+      <div class="alertBody">
+        <div class="alertTitle">Error</div>
+        <div class="alertText">{{errorContent}}</div>
+      </div>
+      <button class="alertClose" type="button" aria-label="Close" (click)="isError = false">×</button>
+    </div>
+  }
+
+  <!-- Loading State -->
+  @if (isLoading) {
+    <div class="loadingContainer">
+      <div class="spinner"></div>
+      <p>Loading predictions...</p>
+    </div>
+  }
+
+  <!-- Dashboard Content -->
+  @if (!isLoading) {
+    
+   
+    <!-- Filter Tabs -->
+    <div class="filterTabs">
+      <button 
+        class="filterTab" 
+        [class.active]="selectedFilter === 'all'"
+        (click)="filterPredictions('all')">
+        All Stocks ({{predictions.length}})
+      </button>
+      <button 
+        class="filterTab" 
+        [class.active]="selectedFilter === 'critical'"
+        (click)="filterPredictions('critical')">
+        <i class="fa-solid fa-circle" style="color: #dc2626;"></i> Critical
+      </button>
+      <button 
+        class="filterTab" 
+        [class.active]="selectedFilter === 'warning'"
+        (click)="filterPredictions('warning')">
+        <i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b;"></i> Warning
+      </button>
+      <button 
+        class="filterTab" 
+        [class.active]="selectedFilter === 'normal'"
+        (click)="filterPredictions('normal')">
+        <i class="fa-solid fa-circle-check" style="color: #10b981;"></i> Normal
+      </button>
+    </div>
+
+    <!-- Stock Predictions Grid -->
+    <div class="predictionsGrid">
+      
+      @if (filteredPredictions.length === 0) {
+        <div class="emptyState">
+          <div class="emptyIcon"><i class="fa-solid fa-inbox"></i></div>
+          <p>No stocks found for this filter</p>
+        </div>
+      }
+
+      @for (prediction of filteredPredictions; track prediction.stock_id) {
+        <div class="predictionCard" [class.critical]="prediction.alert_level === 'critical'" 
+             [class.warning]="prediction.alert_level === 'warning'">
+          
+          <!-- Card Header -->
+          <div class="predictionHeader">
+            <div class="stockInfo">
+              <h3 class="stockName">{{prediction.stock_name}}</h3>
+              <p class="fourageName">{{prediction.fourage_name}} • {{prediction.supplier_name}}</p>
+            </div>
+            <span class="alertBadge" [ngClass]="getAlertBadgeClass(prediction.alert_level)">
+              @if (prediction.alert_level === 'critical') {
+                <i class="fa-solid fa-circle" style="color: #dc2626;"></i>
+              } @else if (prediction.alert_level === 'warning') {
+                <i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b;"></i>
+              } @else if (prediction.alert_level === 'normal') {
+                <i class="fa-solid fa-circle-check" style="color: #10b981;"></i>
+              } @else {
+                <i class="fa-solid fa-circle" style="color: #6b7280;"></i>
+              }
+              {{getAlertLevelText(prediction.alert_level)}}
+            </span>
+          </div>
+
+          <!-- Stock Metrics -->
+          <div class="metricsGrid">
+            
+            <!-- Current Quantity -->
+            <div class="metric">
+              <div class="metricLabel">Current Quantity</div>
+              <div class="metricValue">{{prediction.current_quantity}} kg</div>
+            </div>
+
+            <!-- Daily Consumption -->
+            <div class="metric">
+              <div class="metricLabel">Avg. Daily Consumption</div>
+              <div class="metricValue">
+                @if (prediction.has_feeding_data) {
+                  {{prediction.average_daily_consumption}} kg/day
+                } @else {
+                  <span class="noData">No data</span>
+                }
+              </div>
+            </div>
+
+            <!-- Days Remaining -->
+            <div class="metric highlighted">
+              <div class="metricLabel">Days Remaining</div>
+              <div class="metricValue large">
+                {{formatDaysRemaining(prediction.days_remaining)}}
+              </div>
+            </div>
+
+            <!-- Alert Threshold -->
+            <div class="metric">
+              <div class="metricLabel">Alert Threshold</div>
+              <div class="metricValue">{{prediction.alert_threshold}} kg</div>
+            </div>
+
+          </div>
+
+          <!-- Stock Health Bar -->
+          @if (prediction.days_remaining !== null) {
+            <div class="healthBarContainer">
+              <div class="healthBarLabel">Stock Health</div>
+              <div class="healthBar">
+                <div class="healthBarFill" 
+                     [style.width.%]="getStockHealthPercentage(prediction)"
+                     [style.background]="getStockHealthColor(getStockHealthPercentage(prediction))">
+                </div>
+              </div>
+            </div>
+          }
+
+          <!-- Consumption Stats -->
+          @if (prediction.has_feeding_data) {
+            <div class="consumptionStats">
+              <div class="statItem">
+                <span class="statLabel">Total Consumed:</span>
+                <span class="statValue">{{prediction.total_consumed}} kg</span>
+              </div>
+              <div class="statItem">
+                <span class="statLabel">Analysis Period:</span>
+                <span class="statValue">{{prediction.days_analyzed}} days</span>
+              </div>
+            </div>
+          }
+
+          <!-- Order Suggestion -->
+          @if (needsOrder(prediction)) {
+            <div class="orderSuggestion">
+              <div class="suggestionIcon"><i class="fa-solid fa-clipboard-list"></i></div>
+              <div class="suggestionContent">
+                <div class="suggestionTitle">Suggested Order</div>
+                <div class="suggestionAmount">{{prediction.suggested_order_quantity}} kg</div>
+                <div class="suggestionNote">For 14-day supply</div>
+              </div>
+            </div>
+          }
+
+          <!-- No Data Warning -->
+          @if (!prediction.has_feeding_data) {
+            <div class="noDataWarning">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>No feeding records available for prediction</span>
+            </div>
+          }
+
+        </div>
+      }
+    </div>
+
+    <!-- Consumption Statistics Section -->
+    <div class="consumptionSection">
+      <div class="sectionHeader">
+        <h3><i class="fa-solid fa-chart-line"></i> Consumption Analysis by Animal Subgroup</h3>
+        <button class="btnToggle" (click)="toggleConsumptionStats()">
+          @if (showConsumptionStats) {
+            <span>▼ Hide</span>
+          } @else {
+            <span>▶ Show</span>
+          }
+        </button>
+      </div>
+
+      @if (showConsumptionStats) {
+        <div class="consumptionGrid">
+          @for (consumption of subgroupConsumption; track consumption.subgroup_id) {
+            <div class="consumptionCard">
+              <div class="consumptionHeader">
+                <h4>{{consumption.subgroup_name}}</h4>
+                <span class="groupBadge">{{consumption.group_name}}</span>
+              </div>
+              
+              <div class="consumptionMetrics">
+                <div class="consumptionMetric">
+                  <span class="label">Type:</span>
+                  <span class="value">{{consumption.subgroup_type}}</span>
+                </div>
+                <div class="consumptionMetric">
+                  <span class="label">Animal Count:</span>
+                  <span class="value">{{consumption.animal_count}}</span>
+                </div>
+                <div class="consumptionMetric">
+                  <span class="label">Daily Consumption:</span>
+                  <span class="value">{{consumption.average_daily_consumption}} kg/day</span>
+                </div>
+                <div class="consumptionMetric">
+                  <span class="label">Per Animal:</span>
+                  <span class="value">{{consumption.consumption_per_animal}} kg/day</span>
+                </div>
+                <div class="consumptionMetric">
+                  <span class="label">Total Consumed:</span>
+                  <span class="value">{{consumption.total_consumed}} kg</span>
+                </div>
+                <div class="consumptionMetric">
+                  <span class="label">Analysis Period:</span>
+                  <span class="value">{{consumption.days_analyzed}} days</span>
+                </div>
+              </div>
+
+              @if (!consumption.has_feeding_data) {
+                <div class="noDataNote">No feeding data available</div>
+              }
+            </div>
+          }
+
+          @if (subgroupConsumption.length === 0) {
+            <div class="emptyState">
+              <p>No consumption data available</p>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+  }
+
+</section>

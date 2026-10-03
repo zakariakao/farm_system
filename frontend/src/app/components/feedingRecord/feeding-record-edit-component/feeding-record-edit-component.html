@@ -1,0 +1,78 @@
+<!-- Fourage Stock Movements -->
+<section class="grid oneCol">
+  <div class="card">
+    <div class="cardHeader">
+      <div class="titleBlock">
+        <h3>Feeding Records Movements</h3>
+        <p class="subTitle">Log stock entries/usage per subgroup with date & quantity.</p>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <form class="formGrid" (ngSubmit)="updateFeedingRecord()">
+      <!-- Subgroup -->
+      <div class="field">
+        <label for="subgroup">Sub Animal Group</label>
+        <select [value]="feedingRecord.subgroup_id" id="subgroup" class="control" name="subgroup_id" required [(ngModel)]="updatedFeedingRecord.subgroup_id">
+          <option value="" disabled selected>Select subgroup...</option>
+          @for(subGroup of subGroups; track subGroup.id) {
+            <option [value]="subGroup.id">{{subGroup.name}}</option>
+          }
+        </select>
+        <div class="hint">Required.</div>
+      </div>
+
+      <!-- Fourage Stock -->
+      <div class="field">
+        <label for="fourageStock">Forage Stock Item</label>
+        <select [value]="feedingRecord.fourage_stock_id" id="fourageStock" class="control" name="fourage_stock_id" required [(ngModel)]="updatedFeedingRecord.fourage_stock_id">
+          <option value="" disabled selected>Select forage stock...</option>
+          @for(stock of fourageStocks; track stock.id) {
+            <option [value]="stock.id">{{stock.name}}</option>
+          }
+        </select>
+        <div class="hint">Required.</div>
+      </div>
+
+      <!-- Quantity -->
+      <div class="field">
+        <label for="qty">Quantity (kg)</label>
+        <input 
+          [value]="feedingRecord.quantity"
+          id="qty" 
+          class="control" 
+          type="number" 
+          name="quantity" 
+          [(ngModel)]="updatedFeedingRecord.quantity"
+          min="0" 
+          step="0.01" 
+          placeholder="0" 
+          required 
+        />
+        <div class="hint">Use positive value (e.g. 25.5).</div>
+      </div>
+
+      <!-- DateTime -->
+      <div class="field">
+        <label for="dt">Date & Time</label>
+        <input 
+           [value]="feedingRecord.datetime"
+          id="dt" 
+          class="control" 
+          type="datetime-local" 
+          name="datetime"
+          [(ngModel)]="updatedFeedingRecord.datetime"
+        />
+        <div class="hint">If empty, server uses now().</div>
+      </div>
+
+      <div class="formActions">
+        <button class="btn primary" type="submit">Save Movement</button>
+        <button class="btn" type="button" (click)="resetForm()">Cancel</button>
+      </div>
+
+      <!-- Server error placeholder -->
+      <div class="serverError" style="display:none;">Server error example</div>
+    </form>
+  </div>
+</section>

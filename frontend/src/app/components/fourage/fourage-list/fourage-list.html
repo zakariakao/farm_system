@@ -1,0 +1,81 @@
+<!-- Forage List -->
+<section class="grid oneCol">
+  <div class="card">
+    <div class="cardHeader">
+      <div class="titleBlock">
+        <h3>Forages</h3>
+        <p class="subTitle">Manage forage items and the subgroups they’re suitable for.</p>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolLeft">
+        <div class="field inline">
+          <label for="q" class="srOnly">Search</label>
+          <input id="q" class="control" type="text" placeholder="Search by name..." />
+        </div>
+
+        <div class="field inline">
+          <label for="typeFilter" class="srOnly">Type</label>
+          <select id="typeFilter" class="control">
+            <option value="">All types</option>
+            <option value="hay">hay</option>
+            <option value="silage">silage</option>
+            <option value="grass">grass</option>
+            <option value="grain">grain</option>
+            <option value="supplement">supplement</option>
+            <option value="other">other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="toolRight">
+        <span class="metaTag">Total: <b>{{Fourages.length}}</b></span>
+        <!-- You can replace 0 with dynamic count later -->
+      </div>
+    </div>
+
+    <!-- LIST -->
+    <div class="tableWrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="center">Suitable For</th>
+            <th class="right">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          
+          @if(Fourages.length <= 0) {
+            <tr>
+              <td colspan="5" class="mutedRow">No forages yet.</td>
+            </tr>
+          }
+          
+          @else {
+            @for(fourage of Fourages; track fourage.id) {
+              <tr>
+            <td>
+              <div class="cellMain">
+                <b class="name">{{fourage.name}}</b>
+                <span class="muted">Unique name</span>
+              </div>
+            </td>
+            <td><span class="badge">{{fourage.type}}</span></td>
+            <td class="center"><span class="countPill">3</span></td>
+            <td class="right">
+              <button class="tinyBtn" type="button" [routerLink]="['/fourage/edit', fourage.id]">Edit</button>
+              <button class="tinyBtn danger" type="button" (click)="deleteFourage(fourage.id)">Delete</button>
+            </td>
+          </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,147 @@
+<!-- Supplier CRUD -->
+<section class="grid oneCol">
+  <div class="card">
+    <div class="cardHeader">
+      <h3>Suppliers</h3>
+
+    </div>
+
+     <!-- SUCCESS -->
+     @if(isSucces) {
+      <div class="alert alertSuccess" role="status" aria-live="polite">
+  <div class="alertIcon" aria-hidden="true">✓</div>
+  <div class="alertBody">
+    <div class="alertTitle">Success</div>
+    <div class="alertText">{{succesContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+     @if (isWarning) {
+      <!-- WARNING -->
+<div class="alert alertWarn" role="status" aria-live="polite">
+  <div class="alertIcon" aria-hidden="true">⚠</div>
+  <div class="alertBody">
+    <div class="alertTitle">Warning</div>
+    <div class="alertText">{{warningContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+     @if (isError) {
+      <!-- ERROR -->
+<div class="alert alertError" role="alert">
+  <div class="alertIcon" aria-hidden="true">!</div>
+  <div class="alertBody">
+    <div class="alertTitle">Error</div>
+    <div class="alertText">{{errorContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+    <!-- FORM -->
+    <form class="formGrid" action="#" method="post" autocomplete="off" (ngSubmit)="addSupplier()">
+      <div class="field">
+        <label for="name">Name</label>
+        <input
+          id="name"
+          class="control"
+          type="text"
+          name="name"
+          placeholder="e.g. Atlas Feed Supply"
+          [(ngModel)]="newSupplier.name"
+          required
+        />
+        <div class="hint">Must be unique.</div>
+      </div>
+
+      <div class="field">
+        <label for="supPhone">Phone</label>
+        <input
+          id="supPhone"
+          class="control"
+          type="tel"
+          name="phone"
+          [(ngModel)]="newSupplier.phone"
+          placeholder="+212 6XX XXX XXX"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label for="supEmail">Email</label>
+        <input
+          id="supEmail"
+          class="control"
+          type="email"
+          name="email"
+          [(ngModel)]="newSupplier.email"
+          placeholder="supplier@email.com"
+          required
+        />
+        <div class="hint">Must be unique.</div>
+      </div>
+
+      <div class="formActions">
+        <button class="btn primary" type="submit">Save Supplier</button>
+        <button class="btn" type="button">Cancel</button>
+      </div>
+
+      <!-- Server error placeholder -->
+      <div class="serverError" style="display:none;">Server error example</div>
+    </form>
+
+    <!-- LIST -->
+    <div class="tableTop">
+      <div class="toolLeft">
+        <input class="control search" type="text" placeholder="Search suppliers..." />
+      </div>
+
+      <div class="toolRight">
+        <span class="metaTag">Total: <b>{{suppliers.length}}</b></span>
+      </div>
+    </div>
+
+    <div class="tableWrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th class="right">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- Empty state -->
+           @if(suppliers.length <= 0) {
+            <tr>
+            <td colspan="4" class="mutedRow">No suppliers yet.</td>
+          </tr>
+           }
+          
+           @else {
+            @for(supplier of suppliers; track supplier.id){
+                <tr>
+                   <td><b>{{supplier.name}}</b></td>
+                   <td>{{supplier.phone}}</td>
+                   <td><span class="emailChip">{{supplier.email}}</span></td>
+                   <td class="right">
+                       <button class="tinyBtn" type="button" [routerLink]="['/supplier/edit', supplier.id]">Edit</button>
+                       <button class="tinyBtn danger" type="button" (click)="deleteSupplier(supplier.id)">Delete</button>
+                   </td>
+               </tr>
+            }
+            
+           }
+          
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>

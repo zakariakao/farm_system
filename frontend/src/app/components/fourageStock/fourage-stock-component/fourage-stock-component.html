@@ -1,0 +1,167 @@
+<!-- Fourage Stock (Inventory) -->
+<section class="grid oneCol">
+  <div class="card">
+    <div class="cardHeader">
+      <div class="titleBlock">
+        <h3>Forage Stock</h3>
+        <p class="subTitle">Track quantity per forage and supplier + alert threshold.</p>
+      </div>
+    </div>
+
+     <!-- SUCCESS -->
+     @if(isSucces) {
+      <div class="alert alertSuccess" role="status" aria-live="polite">
+  <div class="alertIcon" aria-hidden="true">✓</div>
+  <div class="alertBody">
+    <div class="alertTitle">Success</div>
+    <div class="alertText">{{succesContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+     @if (isWarning) {
+      <!-- WARNING -->
+<div class="alert alertWarn" role="status" aria-live="polite">
+  <div class="alertIcon" aria-hidden="true">⚠</div>
+  <div class="alertBody">
+    <div class="alertTitle">Warning</div>
+    <div class="alertText">{{warningContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+     @if (isError) {
+      <!-- ERROR -->
+<div class="alert alertError" role="alert">
+  <div class="alertIcon" aria-hidden="true">!</div>
+  <div class="alertBody">
+    <div class="alertTitle">Error</div>
+    <div class="alertText">{{errorContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+    <!-- FORM -->
+    <form class="formGrid" action="#" method="post" (ngSubmit)="addFourageStock()">
+
+        <div class="field">
+           <label>Name</label>
+           <input class="control" type="text" placeholder="stock.." name="name" required [(ngModel)]="newFourageStock.name" />
+        </div>
+      <!-- Fourage -->
+      <div class="field">
+        <label for="fourage">Forage</label>
+        <select id="fourage" class="control" name="fourage_id" required [(ngModel)]="newFourageStock.fourage_id">
+          <option value="" disabled selected>Select forage...</option>
+          @for(fourage of fourages; track fourage.id) {
+            <option [value]="fourage.id">{{fourage.name}}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Supplier -->
+      <div class="field">
+        <label for="supplier">Supplier</label>
+        <select id="supplier" class="control" name="supplier_id" required [(ngModel)]="newFourageStock.supplier_id">
+          <option value="" disabled selected>Select supplier...</option>
+          @for(supplier of suppliers; track supplier.id) {
+            <option [value]="supplier.id">{{supplier.name}}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Quantity -->
+      <div class="field">
+        <label for="qty">Quantity</label>
+        <div class="qtyWrap">
+          <input id="qty" class="control" type="number" name="quantity" min="0" step="0.01" placeholder="0" required [(ngModel)]="newFourageStock.quantity" />
+          <span class="unitPill">kg</span>
+        </div>
+        <div class="hint">Current available stock.</div>
+      </div>
+
+      <!-- Alert Threshold -->
+      <div class="field">
+        <label for="threshold">Alert Threshold</label>
+        <div class="qtyWrap">
+          <input id="threshold" class="control" type="number" name="alert_threshold" min="0" step="0.01" placeholder="0" required [(ngModel)]="newFourageStock.alert_threshold" />
+          <span class="unitPill">kg</span>
+        </div>
+        <div class="hint">Warn when quantity ≤ threshold.</div>
+      </div>
+
+      <div class="formActions">
+        <button class="btn primary" type="submit">Save Stock</button>
+        <button class="btn" type="button">Cancel</button>
+      </div>
+
+      <!-- Server error placeholder -->
+      <div class="serverError" style="display:none;">Server error example</div>
+    </form>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <div class="toolLeft">
+        <input class="control search" type="text" placeholder="Search by forage or supplier..." />
+
+        <div class="field inline">
+          <select class="control" aria-label="Filter by status">
+            <option value="">All</option>
+            <option value="low">Low stock</option>
+            <option value="ok">Normal</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="toolRight">
+        <span class="metaTag">Total: <b>{{fourageStocks.length}}</b></span>
+      </div>
+    </div>
+
+    <!-- LIST -->
+    <div class="tableWrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Forage</th>
+            <th>Supplier</th>
+            <th class="right">Quantity</th>
+            <th class="right">Threshold</th>
+            <th>Updated</th>
+            <th class="right">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          
+          @if(fourageStocks.length <= 0) {
+            <tr>
+            <td colspan="7" class="mutedRow">No stock items yet.</td>
+          </tr>
+          }
+          
+          @else {
+            @for(fourageStock of fourageStocks; track fourageStock.id){
+                  <tr>
+            <td><b>{{fourageStock.name}}</b></td>
+            <td><b>{{getFourageName(fourageStock.fourage_id)}}</b></td>
+            <td>{{getSupplierName(fourageStock.supplier_id)}}</td>
+            <td class="right"><span class="qtyPill">{{fourageStock.quantity}}</span></td>
+            <td class="right"><span class="qtyPill gray">{{fourageStock.alert_threshold}}</span></td>
+            <td class="muted">{{fourageStock.updatedAt}}</td>
+            <td class="right">
+              <a class="tinyBtn" [routerLink]="['/fourageStock/edit', fourageStock.id]">Edit</a>
+              <button class="tinyBtn danger" type="button" (click)="deleteFourageStock(fourageStock.id)">Delete</button>
+            </td>
+          </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

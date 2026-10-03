@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FeedingRecords>
+    <FeedingRecord>
+        <id>fr1</id>
+        <subgroup_id>sag1</subgroup_id>
+        <fourage_stock_id>fs1</fourage_stock_id>
+        <quantity>25</quantity>
+        <datetime>2025-01-06T08:00:00</datetime>
+    </FeedingRecord>
+</FeedingRecords>

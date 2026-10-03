@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AnimalGroups>
+    <AnimalGroup>
+        <id>ag1</id>
+        <name>Bovins</name>
+    </AnimalGroup>
+    <AnimalGroup>
+        <id>ag2</id>
+        <name>Ovins</name>
+    </AnimalGroup>
+</AnimalGroups>

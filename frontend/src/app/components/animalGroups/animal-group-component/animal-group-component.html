@@ -1,0 +1,98 @@
+<!-- Animal Groups CRUD -->
+<section class="grid oneCol">
+  <div class="card">
+    <div class="cardHeader">
+      <h3>Animal Groups</h3>
+    </div>
+
+    <!-- SUCCESS -->
+     @if(isSucces) {
+      <div class="alert alertSuccess" role="status" aria-live="polite">
+  <div class="alertIcon" aria-hidden="true">✓</div>
+  <div class="alertBody">
+    <div class="alertTitle">Success</div>
+    <div class="alertText">{{succesContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+     @if (isWarning) {
+      <!-- WARNING -->
+<div class="alert alertWarn" role="status" aria-live="polite">
+  <div class="alertIcon" aria-hidden="true">⚠</div>
+  <div class="alertBody">
+    <div class="alertTitle">Warning</div>
+    <div class="alertText">{{warningContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+     @if (isError) {
+      <!-- ERROR -->
+<div class="alert alertError" role="alert">
+  <div class="alertIcon" aria-hidden="true">!</div>
+  <div class="alertBody">
+    <div class="alertTitle">Error</div>
+    <div class="alertText">{{errorContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+
+    <!-- FORM -->
+    <form class="formGrid formGrid2" (ngSubmit)="addGroup()">
+      <div class="field">
+        <label>Group Name</label>
+        <input class="control" type="text" placeholder="e.g. Dairy Cows" [(ngModel)]="newGroup.name" name="groupName" />         
+        <div class="error">Name is required</div>
+      </div>
+
+      <div class="formActions">
+        <button class="btn primary" type="submit">
+          Add Group
+        </button>
+
+        <button class="btn" type="button" (click)="resetForm()">
+          Cancel
+        </button>
+      </div>
+
+      
+    </form>
+
+    <!-- LIST -->
+    <div class="tableWrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th class="right">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @if(AnimalGroups.length > 0) {
+              @for(group of AnimalGroups; track group.id) {
+                <tr>
+                   <td><b>{{group.name}}</b></td>
+                   <td class="right">
+                      <button class="tinyBtn" type="button"><a [routerLink]="['/animalGroup/edit', group.id]">Edit</a></button>
+                      <button class="tinyBtn danger" type="button" (click)="deleteGroup(group.id)">Delete</button>
+                   </td>
+                </tr>
+              }
+          }
+          @else {
+            <tr>
+              <td colspan="2" class="mutedRow">No groups yet.</td>
+            </tr>
+          }
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

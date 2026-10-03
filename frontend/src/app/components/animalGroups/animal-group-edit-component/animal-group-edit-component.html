@@ -1,0 +1,35 @@
+<section class="grid oneCol">
+    <div class="card">
+    <div class="cardHeader">
+      <h3>Update Animal Groups</h3>
+    </div>
+
+    <!-- Success Notification -->
+     @if(showNotification) {
+        <div class="successNotification">
+           {{ notificationMessage }}
+        </div>
+     }
+    
+    <!-- FORM -->
+    <form class="formGrid formGrid2" (ngSubmit)="updateAnimalGroup()">
+      <div class="field">
+        <label>Group Name</label>
+        <input [value]=" animalGroup.name" [(ngModel)]="updatedGroup.name" class="control" type="text" placeholder="e.g. Dairy Cows" name="groupName" />         
+        <div class="error">Name is required</div>
+      </div>
+
+      <div class="formActions">
+        <button class="btn primary" type="submit">
+          Save Changes
+        </button>
+
+        <button class="btn" type="button" (click)="resetForm()" >
+          Cancel
+        </button>
+      </div>
+
+      <div class="serverError">This name already exists.</div>
+    </form>
+    </div>
+</section>

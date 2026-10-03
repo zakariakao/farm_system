@@ -1,0 +1,156 @@
+
+<!-- Admin - Users (Add User + List) -->
+<section class="grid oneCol">
+  <div class="card">
+
+    <div class="cardHeader">
+      <div class="titleBlock">
+        <h3>Users</h3>
+        <p class="subTitle">Admin can create users and assign roles (admin / worker).</p>
+      </div>
+    </div>
+
+
+    <!-- SUCCESS -->
+     @if(isSucces) {
+      <div class="alert alertSuccess" role="status" aria-live="polite">
+  <div class="alertIcon" aria-hidden="true">✓</div>
+  <div class="alertBody">
+    <div class="alertTitle">Success</div>
+    <div class="alertText">{{succesContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+     @if (isWarning) {
+      <!-- WARNING -->
+<div class="alert alertWarn" role="status" aria-live="polite">
+  <div class="alertIcon" aria-hidden="true">⚠</div>
+  <div class="alertBody">
+    <div class="alertTitle">Warning</div>
+    <div class="alertText">{{warningContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+     @if (isError) {
+      <!-- ERROR -->
+<div class="alert alertError" role="alert">
+  <div class="alertIcon" aria-hidden="true">!</div>
+  <div class="alertBody">
+    <div class="alertTitle">Error</div>
+    <div class="alertText">{{errorContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+    <!-- FORM -->
+    <form class="formGrid usersForm" action="#" method="post" autocomplete="off" (ngSubmit)="addUser()">
+      <div class="field">
+        <label for="username">Username</label>
+        <input [(ngModel)]="newUser.username" id="username" class="control" type="text" name="username" placeholder="e.g. younes" required />
+        <div class="hint">Unique username recommended.</div>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input [(ngModel)]="newUser.email" id="email" class="control" type="email" name="email" placeholder="user@email.com" required />
+        <div class="hint">Must be unique.</div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="pwWrap">
+          <input [(ngModel)]="newUser.password" id="password" class="control" type="password" name="password" placeholder="Create password" required />
+          <button class="eyeBtn" type="button" aria-label="Show password">
+            <!-- eye icon -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5c5.4 0 9.6 3.4 11 7-1.4 3.6-5.6 7-11 7S2.4 15.6 1 12c1.4-3.6 5.6-7 11-7zm0 2C7.9 7 4.7 9.4 3.3 12 4.7 14.6 7.9 17 12 17s7.3-2.4 8.7-5C19.3 9.4 16.1 7 12 7zm0 2.2A2.8 2.8 0 1 1 12 15a2.8 2.8 0 0 1 0-5.6z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="hint">At least 6 characters.</div>
+      </div>
+
+      <div class="field">
+        <label for="role">Role</label>
+        <select [(ngModel)]="newUser.role" id="role" class="control" name="role" required>
+          <option value="" disabled selected>Select role...</option>
+          <option value="admin">admin</option>
+          <option value="worker">worker</option>
+        </select>
+        <div class="hint">Choose permissions level.</div>
+      </div>
+
+      <div class="formActions">
+        <button class="btn primary" type="submit">Create User</button>
+        <button class="btn" type="button" (click)="resetForm()">Cancel</button>
+      </div>
+
+      <!-- Optional alert placeholders -->
+      <div class="serverError" style="display:none;">Email already exists.</div>
+    </form>
+
+    <!-- LIST TOOLBAR -->
+    <div class="toolbar">
+      <div class="toolLeft">
+        <input class="control search" type="text" placeholder="Search by username or email..." />
+        <select class="control roleFilter" aria-label="Filter role">
+          <option value="">All roles</option>
+          <option value="admin">admin</option>
+          <option value="worker">worker</option>
+        </select>
+      </div>
+
+      <div class="toolRight">
+        <span class="metaTag">Total: <b>{{users.length}}</b></span>
+      </div>
+    </div>
+
+    <!-- USERS TABLE -->
+    <div class="tableWrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            
+            <th class="right">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @if(users.length <= 0) {
+            <tr>
+            <td colspan="5" class="mutedRow">No users yet.</td>
+          </tr>
+          }
+          @else{
+            @for(user of users; track user.id) {
+              <tr>
+            <td><b>{{user.username}}</b></td>
+            <td><span class="emailChip">{{user.email}}</span></td>
+            <td><span class="roleBadge admin">{{user.role}}</span></td>
+            
+            <td class="right">
+              <button class="tinyBtn" type="button">Edit</button>
+              <button class="tinyBtn danger" type="button" (click)="deleteUser(user.id)">Delete</button>
+            </td>
+          </tr>
+            }
+            
+          }
+          
+         
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+</section>

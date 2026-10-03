@@ -1,0 +1,329 @@
+
+:root{
+  --bgGreen:#0c6b3d;
+  --bgGreen2:#0a5c35;
+  --sand:#e7b15a;
+  --cardBorder:#e6eef0;
+  --text:#111827;
+  --muted:#6b7280;
+  --line:#e5e7eb;
+  --primary:#0f6b3a;
+  --primaryDark:#0b5a31;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--text);
+  background:#0e5e36;
+  overflow-x:hidden;
+}
+
+/* Background blobs */
+.bg{position:fixed; inset:0; z-index:0; pointer-events:none;}
+.blob{
+  position:absolute;
+  border-radius:999px;
+  filter: blur(0px);
+  opacity:1;
+}
+.blob-green{
+  width:900px; height:900px;
+  background:var(--bgGreen);
+  left:-320px; top:-360px;
+}
+.blob-sand{
+  width:860px; height:860px;
+  background:var(--sand);
+  right:-350px; bottom:-420px;
+}
+.blob-green2{
+  width:620px; height:620px;
+  background:var(--bgGreen2);
+  right:-260px; top:-260px;
+  opacity:.9;
+}
+.blob-sand2{
+  width:520px; height:520px;
+  background:#dca24b;
+  left:-240px; bottom:-250px;
+  opacity:.9;
+}
+
+/* Center wrapper */
+.wrap{
+  position:relative;
+  z-index:1;
+  min-height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:32px 18px;
+}
+
+/* Card */
+.card{
+  width:min(1100px, 96vw);
+  min-height:640px;
+  background:#fff;
+  border-radius:22px;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns: 1.05fr 1.15fr;
+  border:3px solid rgba(255,255,255,.85);
+  box-shadow: 0 18px 50px rgba(0,0,0,.22);
+}
+
+/* Left side */
+.left{
+  padding:44px 52px;
+  background:#ffffff;
+}
+
+.storeRow{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin-bottom:36px;
+}
+.storeBadge{
+  display:inline-flex;
+  gap:10px;
+  align-items:center;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:#111;
+  font-weight:800;
+  font-size:13px;
+  text-decoration:none;
+}
+.storeBadge .dot{
+  width:10px;height:10px;border-radius:99px;
+  background:linear-gradient(135deg,#5eead4,#22c55e);
+}
+.storeBadge.dark{
+  background:#0b1220;
+  color:#fff;
+  border-color:#0b1220;
+}
+.storeBadge.dark .dot{ background:linear-gradient(135deg,#93c5fd,#ffffff); }
+
+.welcome{
+  margin:0;
+  font-size:16px;
+  color:#1f2937;
+}
+.headline{
+  margin:6px 0 18px;
+  font-size:46px;
+  letter-spacing:-.02em;
+}
+
+.field{margin-top:14px;}
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:900;
+  color:#111827;
+  margin-bottom:8px;
+}
+.field input, .field select{
+  width:100%;
+  border:1px solid #d9dee6;
+  background:#fff;
+  border-radius:10px;
+  padding:14px 14px;
+  font-size:14px;
+  outline:none;
+}
+.field input:focus, .field select:focus{
+  border-color:#8fd7b7;
+  box-shadow:0 0 0 4px rgba(15,107,58,.14);
+}
+.error{
+  display:block;
+  min-height:16px;
+  margin-top:6px;
+  font-size:12px;
+  color:#b91c1c;
+  font-weight:800;
+}
+
+.inputIcon{ position:relative; }
+.inputIcon input{ padding-right:44px; }
+.eyeBtn{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+  background:#fff;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+}
+.eyeBtn svg{ width:18px; height:18px; fill:#6b7280; }
+
+.rowBetween{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:10px;
+}
+.link{
+  font-size:13px;
+  color:#1d4ed8;
+  font-weight:800;
+  text-decoration:none;
+}
+.link:hover{ text-decoration:underline; }
+
+.primaryBtn{
+  width:100%;
+  margin-top:18px;
+  border:0;
+  border-radius:10px;
+  padding:14px 14px;
+  font-size:14px;
+  font-weight:900;
+  background:var(--primary);
+  color:#fff;
+  cursor:pointer;
+  box-shadow: 0 10px 24px rgba(15,107,58,.22);
+  background-color:#065f46;
+}
+.primaryBtn:hover{ background-color: #0a5c35; }
+
+.switchText{
+  margin:14px 0 0;
+  color:#6b7280;
+  font-size:13px;
+  font-weight:800;
+  text-align:center;
+}
+.switchBtn{
+  margin-left:6px;
+  border:0;
+  background:transparent;
+  color:var(--primary);
+  font-weight:1000;
+  cursor:pointer;
+}
+.switchBtn:hover{ text-decoration:underline; }
+
+.formMsg{
+  margin-top:12px;
+  font-weight:900;
+  font-size:13px;
+  color:#065f46;
+  text-align:center;
+  min-height:18px;
+}
+
+/* Right side */
+.right{
+  position:relative;
+  background:linear-gradient(180deg,#0f6b3a,#0b5a31);
+  color:#fff;
+  padding:32px 34px;
+  overflow:hidden;
+}
+
+.brand{
+  position:absolute;
+  top:26px;
+  right:28px;
+  text-align:right;
+  z-index:2;
+}
+.brandName{
+  font-weight:1000;
+  letter-spacing:.02em;
+  font-size:20px;
+}
+.brandRole{
+  opacity:.85;
+  font-weight:800;
+  font-size:13px;
+  margin-top:2px;
+}
+
+.art{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:74px;
+}
+.heroSvg{
+  width:min(520px, 92%);
+  height:auto;
+}
+
+.promo{
+  position:absolute;
+  left:34px;
+  right:34px;
+  bottom:40px;
+  text-align:center;
+  z-index:2;
+}
+.promo h2{
+  margin:0;
+  font-size:34px;
+  letter-spacing:-.02em;
+  text-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+.promo p{
+  margin:10px 0 0;
+  font-size:14px;
+  opacity:.92;
+  font-weight:800;
+}
+
+/* Right blobs inside panel */
+.rBlob{
+  position:absolute;
+  border-radius:999px;
+  opacity:.22;
+  filter: blur(0px);
+  z-index:1;
+}
+.rBlob1{
+  width:320px;height:320px;
+  background:#32d27c;
+  left:-120px;
+  top:60px;
+}
+.rBlob2{
+  width:420px;height:420px;
+  background:#0a9b5c;
+  right:-180px;
+  bottom:-160px;
+}
+
+/* Register-only fields hidden in login mode */
+[data-only="register"]{ display:none; }
+
+/* Responsive */
+@media (max-width: 980px){
+  .card{
+    grid-template-columns: 1fr;
+    min-height:auto;
+  }
+  .right{
+    min-height:420px;
+    padding-top:22px;
+  }
+  .art{ margin-top:58px; }
+  .promo{ position:relative; inset:auto; margin-top:10px; padding-bottom:14px; }
+  .brand{ position:relative; top:auto; right:auto; text-align:center; margin-bottom:10px; }
+  .left{ padding:34px 22px; }
+  .headline{ font-size:38px; }
+}

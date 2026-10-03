@@ -1,0 +1,69 @@
+<!-- Fourage Stock (Inventory) -->
+<section class="grid oneCol">
+  <div class="card">
+    <div class="cardHeader">
+      <div class="titleBlock">
+        <h3>Forage Stock</h3>
+        <p class="subTitle">Track quantity per forage and supplier + alert threshold.</p>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <form class="formGrid" action="#" method="post" (ngSubmit)="updateFourageStock()">
+
+        <div class="field">
+           <label>Name</label>
+           <input [value]="fourageStock.name" class="control" type="text" placeholder="stock.." name="name" required [(ngModel)]="updatedFourageStock.name" />
+        </div>
+      <!-- Fourage -->
+      <div class="field">
+        <label for="fourage">Forage</label>
+        <select [value]="fourageStock.fourage_id" id="fourage" class="control" name="fourage_id" required [(ngModel)]="updatedFourageStock.fourage_id">
+          <option value="" disabled selected>Select forage...</option>
+          @for(fourage of fourages; track fourage.id) {
+            <option [value]="fourage.id">{{fourage.name}}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Supplier -->
+      <div class="field">
+        <label for="supplier">Supplier</label>
+        <select [value]="fourageStock.supplier_id" id="supplier" class="control" name="supplier_id" required [(ngModel)]="updatedFourageStock.supplier_id">
+          <option value="" disabled selected>Select supplier...</option>
+          @for(supplier of suppliers; track supplier.id) {
+            <option [value]="supplier.id">{{supplier.name}}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Quantity -->
+      <div class="field">
+        <label for="qty">Quantity</label>
+        <div class="qtyWrap">
+          <input [value]="fourageStock.quantity" id="qty" class="control" type="number" name="quantity" min="0" step="0.01" placeholder="0" required [(ngModel)]="updatedFourageStock.quantity" />
+          <span class="unitPill">kg</span>
+        </div>
+        <div class="hint">Current available stock.</div>
+      </div>
+
+      <!-- Alert Threshold -->
+      <div class="field">
+        <label for="threshold">Alert Threshold</label>
+        <div class="qtyWrap">
+          <input [value]="fourageStock.alert_threshold" id="threshold" class="control" type="number" name="alert_threshold" min="0" step="0.01" placeholder="0" required [(ngModel)]="updatedFourageStock.alert_threshold" />
+          <span class="unitPill">kg</span>
+        </div>
+        <div class="hint">Warn when quantity ≤ threshold.</div>
+      </div>
+
+      <div class="formActions">
+        <button class="btn primary" type="submit">Save Stock</button>
+        <button class="btn" type="button" (click)="resetForm()">Cancel</button>
+      </div>
+
+      <!-- Server error placeholder -->
+      <div class="serverError" style="display:none;">Server error example</div>
+    </form>
+  </div>
+</section>

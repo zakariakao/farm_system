@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Fourages>
+    <Fourage>
+        <id>f1</id>
+        <name>Foin naturel</name>
+        <type>hay</type>
+        <suitableFor>
+            <animal>Bovins</animal>
+            <animal>Ovins</animal>
+        </suitableFor>
+    </Fourage>
+    <Fourage>
+        <id>f2</id>
+        <name>Maïs ensilé</name>
+        <type>silage</type>
+        <suitableFor>
+            <animal>Bovins</animal>
+        </suitableFor>
+    </Fourage>
+</Fourages>

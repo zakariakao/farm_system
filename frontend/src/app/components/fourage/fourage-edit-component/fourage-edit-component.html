@@ -1,0 +1,76 @@
+<!-- Fourage / Forage Form -->
+<section class="grid oneCol">
+  <div class="card">
+    <div class="cardHeader">
+      <h3>Fourage</h3>
+    </div>
+
+    <form class="formGrid" [formGroup]="fourageForm"  (ngSubmit)="onSubmit()">
+      <!-- Name -->
+      <div class="field">
+        <label for="forageName">Name</label>
+        <input
+          id="forageName"
+          class="control"
+          type="text"
+          formControlName="name"
+          placeholder="e.g. Alfalfa Hay"
+          required
+        />
+        <div class="hint">Must be unique.</div>
+      </div>
+
+      <!-- Type -->
+      <div class="field">
+        <label for="forageType">Type</label>
+        <select id="forageType" class="control" formControlName="type" required>
+          <option value="" disabled selected>Select type...</option>
+          <option value="hay">hay</option>
+          <option value="silage">silage</option>
+          <option value="grass">grass</option>
+          <option value="grain">grain</option>
+          <option value="supplement">supplement</option>
+          <option value="other">other</option>
+        </select>
+        <div class="hint">Choose one of the allowed types.</div>
+      </div>
+
+      <!-- Suitable For -->
+      <div class="field full">
+        <div class="labelRow">
+          <label>Suitable For (Sub Animal Groups)</label>
+          <span class="pill">Multi-select</span>
+        </div>
+
+        <div class="pickWrap" role="group" aria-label="Suitable For Subgroups">
+          <!-- Replace these with real SubAnimalGroup items -->
+           @for(subgroup of AnimalSubGroups; track subgroup.id) {
+              <label class="pickItem">
+              <input 
+                type="checkbox" 
+                [value]="subgroup.id"
+                (change)="onCheckboxChange($event)"
+              />
+              <span class="pickText">
+                <b>{{subgroup.name}}</b>
+              </span>
+            </label>
+           }
+        </div>
+
+        <div class="subHint">
+          Tip: choose the subgroups that can consume this fourage.
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="formActions">
+        <button class="btn primary" type="submit">Save changes</button>
+        <button class="btn" type="button" (click)="onCancel()">Cancel</button>
+      </div>
+
+      <!-- Server error placeholder -->
+      <div class="serverError" style="display:none;">Server error example</div>
+    </form>
+  </div>
+</section>

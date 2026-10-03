@@ -1,0 +1,65 @@
+<!-- Fourage Stock Alerts -->
+<section class="grid oneCol">
+  <div class="card">
+
+    <div class="cardHeader">
+      <div class="titleBlock">
+        <h3>Forage Stock Alerts</h3>
+        <p class="subTitle">Items where quantity is at or below the alert threshold.</p>
+
+        <!-- Optional stats row -->
+        <div class="statRow">
+          <span class="statPill statDanger">Low Stock: <b>{{alerts.length}}</b></span>
+        </div>
+      </div>
+
+      
+    </div>
+
+    
+
+    <!-- ALERT LIST -->
+    <div class="tableWrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Stock Name</th>
+            <th class="right">Quantity</th>
+            <th class="right">Threshold</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- Empty state -->
+           @if (alerts.length <= 0) {
+            <tr>
+               <td colspan="9" class="mutedRow">No alerts 🎉 Stock levels look good.</td>
+            </tr>
+           }
+
+           @else {
+            @for(alert of alerts; track alert.id) {
+                <tr class="rowCritical">
+            <td><span class="badge critical">Critical</span></td>
+            <td><b>{{alert.name}}</b></td>
+            <td class="right"><span class="qtyPill warn">{{alert.quantity}}</span></td>
+            <td class="right"><span class="qtyPill gray">{{alert.alert_threshold}}</span></td>
+          </tr>
+            }
+           }
+          
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="listFooter">
+      <div class="legend">
+        <span class="legendItem"><span class="dot critical"></span> Critical: quantity ≤ 50% of threshold</span>
+        
+      </div>
+    </div>
+
+  </div>
+</section>

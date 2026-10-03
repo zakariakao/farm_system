@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Suppliers>
+    <Supplier>
+        <id>sup1</id>
+        <name>AgroFourniture SARL</name>
+        <phone>+212600000000</phone>
+        <email>contact@agrofourniture.ma</email>
+    </Supplier>
+    <Supplier>
+        <id>sup2</id>
+        <name>Green Farm</name>
+        <phone>+212611111111</phone>
+        <email>info@greenfarm.ma</email>
+    </Supplier>
+</Suppliers>

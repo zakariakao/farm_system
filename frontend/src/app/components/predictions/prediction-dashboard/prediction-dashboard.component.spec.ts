@@ -1,0 +1,24 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+import { PredictionDashboardComponent } from './prediction-dashboard.component';
+
+describe('PredictionDashboardComponent', () => {
+  let component: PredictionDashboardComponent;
+  let fixture: ComponentFixture<PredictionDashboardComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [PredictionDashboardComponent, HttpClientTestingModule]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(PredictionDashboardComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

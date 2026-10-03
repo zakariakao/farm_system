@@ -1,0 +1,64 @@
+<section class="grid oneCol">
+  <div class="card">
+    <div class="cardHeader">
+      <h3> Update Suppliers</h3>
+
+    </div>
+
+    <form class="formGrid" action="#" method="post" autocomplete="off" (ngSubmit)="updateSupplier()">
+      <div class="field">
+        <label for="name">Name</label>
+        <input
+          [value]="supplier.name"
+          [(ngModel)]="updatedSupplier.name"
+          id="name"
+          class="control"
+          type="text"
+          name="name"
+          placeholder="e.g. Atlas Feed Supply"
+         
+          required
+        />
+        <div class="hint">Must be unique.</div>
+      </div>
+
+      <div class="field">
+        <label for="supPhone">Phone</label>
+        <input
+        [value]="supplier.phone"
+        [(ngModel)]="updatedSupplier.phone"
+          id="supPhone"
+          class="control"
+          type="tel"
+          name="phone"
+          
+          placeholder="+212 6XX XXX XXX"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label for="supEmail">Email</label>
+        <input
+        [value]="supplier.email"
+        [(ngModel)]="updatedSupplier.email"
+          id="supEmail"
+          class="control"
+          type="email"
+          name="email"
+          
+          placeholder="supplier@email.com"
+          required
+        />
+        <div class="hint">Must be unique.</div>
+      </div>
+
+      <div class="formActions">
+        <button class="btn primary" type="submit">Save Changes</button>
+        <button class="btn" type="button" (click)="resetForm()">Cancel</button>
+      </div>
+
+      <div class="serverError" style="display:none;">Server error example</div>
+    </form>
+  </div>
+</section>

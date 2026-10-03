@@ -1,0 +1,112 @@
+<!-- Animal Group CRUD (Sub Animal Group) -->
+<section class="grid oneCol">
+  <div class="card">
+    <div class="cardHeader">
+      <h3>Animal Subgroups</h3>
+    </div>
+
+     <!-- SUCCESS -->
+     @if(isSucces) {
+      <div class="alert alertSuccess" role="status" aria-live="polite">
+  <div class="alertIcon" aria-hidden="true">✓</div>
+  <div class="alertBody">
+    <div class="alertTitle">Success</div>
+    <div class="alertText">{{succesContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+     @if (isWarning) {
+      <!-- WARNING -->
+<div class="alert alertWarn" role="status" aria-live="polite">
+  <div class="alertIcon" aria-hidden="true">⚠</div>
+  <div class="alertBody">
+    <div class="alertTitle">Warning</div>
+    <div class="alertText">{{warningContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+     @if (isError) {
+      <!-- ERROR -->
+<div class="alert alertError" role="alert">
+  <div class="alertIcon" aria-hidden="true">!</div>
+  <div class="alertBody">
+    <div class="alertTitle">Error</div>
+    <div class="alertText">{{errorContent}}</div>
+  </div>
+  <button class="alertClose" type="button" aria-label="Close">×</button>
+</div>
+     }
+
+    <!-- FORM -->
+    <form class="formGrid" (ngSubmit)="addSubGroup()">
+      <div class="field">
+        <label>Animal Group</label>
+        <select class="control" [(ngModel)]="newSubGroup.groupAnimal_id" name="groupAnimal_id" required>
+          <option value="" disabled>Select group...</option>
+          @for(group of AnimalGroups; track group.id) {
+            <option [value]="group.id">{{group.name}}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Name</label>
+        <input class="control" type="text" placeholder="e.g. Dairy Cows A" [(ngModel)]="newSubGroup.name" name="name" required />
+      </div>
+
+      <div class="field">
+        <label>Type</label>
+        <input class="control" type="text" placeholder="e.g. cow / sheep / goat" [(ngModel)]="newSubGroup.type" name="type" required />
+      </div>
+
+      <div class="field">
+        <label>Quantity</label>
+        <input class="control" type="number" placeholder="0" [(ngModel)]="newSubGroup.quantity" name="quantity" required />
+      </div>
+
+      <div class="formActions">
+        <button class="btn primary" type="submit">
+          Add Subgroup
+        </button>
+
+        <button class="btn" type="button" (click)="resetForm()">
+          Cancel
+        </button>
+      </div>
+    </form>
+
+    <!-- LIST -->
+    <div class="tableWrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Group</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="right">Qty</th>
+            <th class="right">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for(subGroup of AnimalSubGroups; track subGroup.id){
+            <tr>
+            <td>{{getAnimalGroupName(subGroup.groupAnimal_id)}}</td>
+            <td><b>{{subGroup.name}}</b></td>
+            <td>{{subGroup.type}}</td>
+            <td class="right">{{subGroup.quantity}}</td>
+            <td class="right">
+              <button class="tinyBtn" type="button"><a [routerLink]="['/subGroup/edit', subGroup.id]">Edit</a></button>
+              <button class="tinyBtn danger" type="button" (click)="deleteSubGroup(subGroup.id)">Delete</button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

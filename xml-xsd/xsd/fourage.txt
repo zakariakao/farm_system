@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="FourageType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="hay"/>
+            <xs:enumeration value="silage"/>
+            <xs:enumeration value="grass"/>
+            <xs:enumeration value="grain"/>
+            <xs:enumeration value="supplement"/>
+            <xs:enumeration value="other"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="Fourages">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Fourage" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="id" type="xs:string"/>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="type" type="FourageType"/>
+                            <xs:element name="suitableFor">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="animal" type="xs:string" maxOccurs="unbounded"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

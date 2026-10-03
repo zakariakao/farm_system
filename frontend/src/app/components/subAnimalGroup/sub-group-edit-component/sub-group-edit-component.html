@@ -1,0 +1,51 @@
+<section class="grid oneCol">
+  <div class="card">
+
+    <div class="cardHeader">
+      <h3>Update Subgroups</h3>
+    </div>
+
+    @if(showNotification) {
+        <div class="successNotification">
+           {{ notificationMessage }}
+        </div>
+     }
+     
+<form class="formGrid" (ngSubmit)="updateSubAnimalGroup()">
+      <div class="field">
+        <label>Animal Group</label>
+        <select [value]="subGroup.groupAnimal_id" [(ngModel)]="updatedSubGroup.groupAnimal_id" class="control"  name="groupAnimal_id" required>
+          <option value="" disabled>Select group...</option>
+           @for(group of animalGroups; track group.id) {
+            <option [value]="group.id" >{{group.name}}</option>
+           }
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Name</label>
+        <input [value]="subGroup.name" [(ngModel)]="updatedSubGroup.name" class="control" type="text" placeholder="e.g. Dairy Cows A"  name="name" required />
+      </div>
+
+      <div class="field">
+        <label>Type</label>
+        <input [value]="subGroup.type" [(ngModel)]="updatedSubGroup.type" class="control" type="text" placeholder="e.g. cow / sheep / goat"  name="type" required />
+      </div>
+
+      <div class="field">
+        <label>Quantity</label>
+        <input [value]="subGroup.quantity" [(ngModel)]="updatedSubGroup.quantity" class="control" type="number" placeholder="0"  name="quantity" required />
+      </div>
+
+      <div class="formActions">
+        <button class="btn primary" type="submit">
+          Save changes
+        </button>
+
+        <button class="btn" type="button" (click)="resetForm()">
+          Cancel
+        </button>
+      </div>
+    </form>
+    </div>
+</section>

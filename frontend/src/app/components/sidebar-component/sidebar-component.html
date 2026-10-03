@@ -1,0 +1,159 @@
+<aside class="sidebar">
+  <div class="brand">
+    <div class="logo" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M12 21c5 0 9-3.5 9-8.5S17.5 4 12.5 4C8.4 4 5 6.7 5 10.3c0 2.4 1.8 4.1 4 4.1 2.3 0 3.9-1.6 3.9-3.5 0-1.8-1.6-3-3.3-2.7"
+          stroke="#0f5b43" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="name">Farm Feed</div>
+  </div>
+
+  <div class="sideSectionTitle">Menu</div>
+
+  <nav class="nav" id="nav">
+    <!-- DASHBOARD -->
+    <div class="navGroup">
+      <button class="navParent" 
+              [class.active]="isGroupExpanded('dashboard')"
+              type="button" 
+              [attr.aria-expanded]="isGroupExpanded('dashboard')"
+              (click)="toggleGroup('dashboard')">
+        <span class="ico" aria-hidden="true"><i class="fa-solid fa-gauge-high"></i></span>
+        Dashboard
+        <span class="chev" aria-hidden="true">▾</span>
+      </button>
+
+      <div class="subNav" [class.open]="isGroupExpanded('dashboard')">
+        <a routerLink="/dashboard" [class.active]="isActive('overview')" (click)="setActive('overview')">Overview</a>
+      </div>
+    </div>
+
+    <!-- ANIMALS -->
+    <div class="navGroup">
+      <button class="navParent" 
+              [class.active]="isGroupExpanded('animals')"
+              type="button" 
+              [attr.aria-expanded]="isGroupExpanded('animals')"
+              (click)="toggleGroup('animals')">
+        <span class="ico" aria-hidden="true"><i class="fa-solid fa-cow"></i></span>
+        Animals
+        <span class="chev" aria-hidden="true">▾</span>
+      </button>
+
+      <div class="subNav" [class.open]="isGroupExpanded('animals')">
+        <a routerLink="/animalGroups" [class.active]="isActive('animal-groups')" (click)="setActive('animal-groups')">Animal Groups</a>
+        <a routerLink="/subAnimalGroups" [class.active]="isActive('animal-subgroups')" (click)="setActive('animal-subgroups')">Animal Subgroups</a>
+      </div>
+    </div>
+
+    <!-- FORAGE -->
+    <div class="navGroup">
+      <button class="navParent" 
+              [class.active]="isGroupExpanded('forage')"
+              type="button" 
+              [attr.aria-expanded]="isGroupExpanded('forage')"
+              (click)="toggleGroup('forage')">
+        <span class="ico" aria-hidden="true"><i class="fa-solid fa-leaf"></i></span>
+        Forage
+        <span class="chev" aria-hidden="true">▾</span>
+      </button>
+
+      <div class="subNav" [class.open]="isGroupExpanded('forage')">
+        <a routerLink="/fourageList" [class.active]="isActive('forage-list')" (click)="setActive('forage-list')">Forage List</a>
+        <a routerLink="/addFourage" [class.active]="isActive('add-forage')" (click)="setActive('add-forage')">Add New Forage</a>
+      </div>
+    </div>
+
+    <!-- SUPPLIERS -->
+    <div class="navGroup">
+      <button class="navParent" 
+              [class.active]="isGroupExpanded('suppliers')"
+              type="button" 
+              [attr.aria-expanded]="isGroupExpanded('suppliers')"
+              (click)="toggleGroup('suppliers')">
+        <span class="ico" aria-hidden="true"><i class="fa-solid fa-truck"></i></span>
+        Suppliers
+        <span class="chev" aria-hidden="true">▾</span>
+      </button>
+
+      <div class="subNav" [class.open]="isGroupExpanded('suppliers')">
+        <a routerLink="/suppliers" [class.active]="isActive('supplier-list')" (click)="setActive('supplier-list')">Supplier List</a>
+      </div>
+    </div>
+
+    <!-- STOCK -->
+    <div class="navGroup">
+      <button class="navParent" 
+              [class.active]="isGroupExpanded('stock')"
+              type="button" 
+              [attr.aria-expanded]="isGroupExpanded('stock')"
+              (click)="toggleGroup('stock')">
+        <span class="ico" aria-hidden="true"><i class="fa-solid fa-boxes-stacked"></i></span>
+        Stock
+        <span class="chev" aria-hidden="true">▾</span>
+      </button>
+
+      <div class="subNav" [class.open]="isGroupExpanded('stock')">
+        <a routerLink="/fourageStock" [class.active]="isActive('stock-overview')" (click)="setActive('stock-overview')">Stock Overview</a>
+        <a routerLink="/predictions" [class.active]="isActive('predictions')" (click)="setActive('predictions')">📊 Smart Predictions</a>
+      </div>
+    </div>
+
+    <!-- FEEDING -->
+    <div class="navGroup">
+      <button class="navParent" 
+              [class.active]="isGroupExpanded('feeding')"
+              type="button" 
+              [attr.aria-expanded]="isGroupExpanded('feeding')"
+              (click)="toggleGroup('feeding')">
+        <span class="ico" aria-hidden="true"><i class="fa-solid fa-utensils"></i></span>
+        Feeding
+        <span class="chev" aria-hidden="true">▾</span>
+      </button>
+
+      <div class="subNav" [class.open]="isGroupExpanded('feeding')">
+        <a routerLink="/feedingRecord" [class.active]="isActive('record-feeding')" (click)="setActive('record-feeding')">Record Feeding</a>
+        
+      </div>
+    </div>
+
+
+    <!-- ALERTS -->
+     @if(isAdmin()) {
+       <div class="navGroup">
+      <button class="navParent" 
+              [class.active]="isGroupExpanded('alerts')"
+              type="button" 
+              [attr.aria-expanded]="isGroupExpanded('alerts')"
+              (click)="toggleGroup('alerts')">
+        <span class="ico" aria-hidden="true"><i class="fa-solid fa-user" style="color: #374151;"></i></span>
+        Users
+        <span class="chev" aria-hidden="true">▾</span>
+      </button>
+
+      <div class="subNav" [class.open]="isGroupExpanded('alerts')">
+        <a routerLink="/users" [class.active]="isActive('low-stock-alert')" (click)="setActive('low-stock-alert')">Manage Users</a>
+        
+      </div>
+    </div>
+     }
+
+     <!-- REPORTS -->
+    <div class="navGroup">
+      <button class="navParent" type="button" aria-expanded="false">
+        <span class="ico" aria-hidden="true"><i class="fa-solid fa-bell"></i></span>
+        <a routerLink="/alerts"> Alerts</a>
+      </button>
+    </div>
+
+
+
+   
+  </nav>
+
+  <div class="sideSectionTitle">General</div>
+  <nav class="nav">
+    <a href="#" (click)="logout()"><span class="ico" aria-hidden="true"><i class="fa-solid fa-right-from-bracket"></i></span> Logout</a>
+  </nav>
+</aside>
